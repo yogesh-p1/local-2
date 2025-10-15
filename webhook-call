@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Call Cloudflare Worker -> n8n</title>
+  </head>
+  <body>
+    <h1>Call Cloudflare Worker</h1>
+
+    <button id="btnPost">POST JSON</button>
+    <button id="btnGet">GET</button>
+    <pre id="result" style="white-space:pre-wrap; border:1px solid #ccc; padding:10px;"></pre>
+
+    <script>
+      const WORKER_URL = "https://crimson-dust-0d1a.yogeshdeployedapps.workers.dev/"; // replace
+
+      document.getElementById("btnPost").addEventListener("click", () => callWorker("POST"));
+      document.getElementById("btnGet").addEventListener("click", () => callWorker("GET"));
+
+      async function callWorker(method = "POST") {
+        const out = document.getElementById("result");
+        out.textContent = "Calling...";
+
+        const options = {
+          method,
+          headers: {
+            // Only include Content-Type for methods with body
+            ...(method !== "GET" ? { "Content-Type": "application/json" } : {}),
+          },
+          // Only include body for non-GET
+          ...(method !== "GET" ? { body: JSON.stringify({ test: "hello from browser", time: Date.now() }) } : {}),
+          credentials: "include" // if you need cookies; requires CORS allow-credentials on worker
+        };
+
+        try {
+          const res = await fetch(WORKER_URL, options);
+
+          // if HTTP-level error, show status
+          if (!res.ok) {
+            const text = await res.text();
+            out.textContent = `HTTP ${res.status} ${res.statusText}\n\n${text}`;
+            return;
+          }
+
+          const text = await res.text();
+          try {
+            const data = JSON.parse(text);
+            out.textContent = JSON.stringify(data, null, 2);
+          } catch (e) {
+            // Not JSON
+            out.textContent = text;
+          }
+        } catch (err) {
+          out.textContent = "Fetch failed: " + err.message;
+        }
+      }
+    </script>
+  </body>
+</html>
