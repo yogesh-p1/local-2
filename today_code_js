@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Performance Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .site-info {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .site-info h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .site-info p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .stats-overview {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .stats-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-box .label {
+            font-size: 0.9em;
+            font-weight: 600;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-box .value {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .chart-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .chart-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .pages-analyzed {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .pages-analyzed h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .page-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .page-item {
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #555;
+            font-size: 0.95em;
+            word-break: break-all;
+            border-left: 4px solid #667eea;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Site Performance Report</h1>
+            <p>Average Lighthouse Performance Metrics</p>
+        </header>
+
+        <div class="site-info">
+            <h2 id="baseSite">Loading...</h2>
+            <p id="pageCount">Analyzing pages...</p>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stats-title">Average Performance Metrics</div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="label">FCP</div>
+                    <div class="value" id="avgFcp">-</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">CLS</div>
+                    <div class="value" id="avgCls">-</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">LCP</div>
+                    <div class="value" id="avgLcp">-</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">INP</div>
+                    <div class="value" id="avgInp">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="chart-title">Overall Site Performance Visualization</h2>
+            <div class="chart-container">
+                <img id="performanceChart" src="" alt="Site Performance Chart">
+            </div>
+        </div>
+
+        <div class="pages-analyzed">
+            <h3>📄 Pages Analyzed (<span id="totalPages">0</span>)</h3>
+            <div class="page-list" id="pageList">
+                <!-- Pages will be listed here -->
+            </div>
+        </div>
+
+        <footer>
+            <p>Generated on <span id="currentDate"></span> | Powered by Lighthouse Metrics</p>
+        </footer>
+    </div>
+
+    <script>
+async function loadPortfolio() {
+    const url = "https://raylene-prenarcotic-typologically.ngrok-free.dev/call-webhook";
+    const data = { key: "value" };
+
+    async function callWebhook() {
+        const controller = new AbortController();
+        const timeout = 15000; // 15 seconds timeout
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        try {
+            const params = new URLSearchParams(data).toString();
+
+            const response = await fetch(`${url}?${params}`, {
+                method: "GET",
+                signal: controller.signal
+            });
+
+            clearTimeout(timeoutId); // clear timeout if request succeeds
+
+            const responseData = await response.text(); // or response.json() if JSON
+            console.log("Status:", response.status);
+            console.log("Response:", responseData);
+
+            renderReport(responseData);
+        } catch (error) {
+            if (error.name === "AbortError") {
+                console.error(`Request timed out after ${timeout / 1000} seconds`);
+            } else {
+                console.error("Error fetching webhook:", error);
+            }
+        }
+    }
+
+    // Call the function
+    callWebhook();
+}
+
+
+// ✅ Your existing functions (slightly modified)
+function processData(data) {
+  const uniquePages = {};
+  data.forEach(item => {
+    const site = item.current_site;
+    if (!uniquePages[site]) uniquePages[site] = item;
+  });
+
+  const uniqueMetrics = Object.values(uniquePages);
+  const totals = { fcp: 0, cls: 0, lcp: 0, inp: 0 };
+
+  uniqueMetrics.forEach(metric => {
+    totals.fcp += metric.fcp || 0;
+    totals.cls += metric.cls || 0;
+    totals.lcp += metric.lcp || 0;
+    totals.inp += metric.inp || 0;
+  });
+
+  const count = uniqueMetrics.length || 1;
+  const averages = {
+    fcp: Math.round(totals.fcp / count),
+    cls: Number((totals.cls / count).toFixed(2)),
+    lcp: Math.round(totals.lcp / count),
+    inp: Math.round(totals.inp / count)
+  };
+
+  return { averages, uniqueMetrics, baseSite: uniqueMetrics[0]?.base_site || 'Unknown' };
+}
+
+function generateChartUrl(averages, baseSite) {
+  const chartConfig = {
+    type: 'bar',
+    data: {
+      labels: ['FCP', 'CLS', 'LCP', 'INP'],
+      datasets: [{
+        label: baseSite,
+        data: [averages.fcp, averages.cls, averages.lcp, averages.inp],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.7)',
+          'rgba(255, 99, 132, 0.7)',
+          'rgba(255, 206, 86, 0.7)',
+          'rgba(75, 192, 192, 0.7)'
+        ],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        title: { display: true, text: 'Average Lighthouse Performance Metrics' }
+      },
+      scales: { y: { beginAtZero: true } }
+    }
+  };
+  return `https://quickchart.io/chart?width=800&height=500&c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
+}
+
+function renderReport(inputData) {
+  const { averages, uniqueMetrics, baseSite } = processData(inputData);
+
+  document.getElementById('baseSite').textContent = baseSite;
+  document.getElementById('pageCount').textContent = `${uniqueMetrics.length} page(s) analyzed`;
+  document.getElementById('totalPages').textContent = uniqueMetrics.length;
+
+  document.getElementById('avgFcp').textContent = averages.fcp;
+  document.getElementById('avgCls').textContent = averages.cls;
+  document.getElementById('avgLcp').textContent = averages.lcp;
+  document.getElementById('avgInp').textContent = averages.inp;
+
+  document.getElementById('performanceChart').src = generateChartUrl(averages, baseSite);
+
+  const pageList = document.getElementById('pageList');
+  pageList.innerHTML = '';
+  uniqueMetrics.forEach(metric => {
+    const div = document.createElement('div');
+    div.className = 'page-item';
+    div.textContent = metric.current_site;
+    pageList.appendChild(div);
+  });
+
+  document.getElementById('currentDate').textContent =
+    new Date().toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+}
+
+// ✅ Trigger everything when page loads
+window.onload = loadPortfolio;
+</script>
+
+
+</body>
+</html>
