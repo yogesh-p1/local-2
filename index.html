@@ -327,10 +327,10 @@
     </style>
 </head>
 <body>
-    <!-- <div id="loadingOverlay">
+    <div id="loadingOverlay">
         <div class="loader"></div>
         <p>Loading Site Performance Data...</p>
-    </div> -->
+    </div>
 
     <div class="container">
         <header>
@@ -702,6 +702,9 @@ function renderReport(inputData) {
     document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric'
     });
+
+    document.getElementById('loadingOverlay').classList.add('hidden');
+
 }
 
 window.onload = loadPortfolio;
