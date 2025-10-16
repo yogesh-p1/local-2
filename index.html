@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -78,7 +78,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -90,10 +90,15 @@
             border-radius: 12px;
             color: white;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
         }
 
         .stat-box .label {
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 600;
             opacity: 0.95;
             margin-bottom: 8px;
@@ -102,8 +107,14 @@
         }
 
         .stat-box .value {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: 700;
+        }
+
+        .stat-box .unit {
+            font-size: 0.7em;
+            opacity: 0.9;
+            margin-top: 5px;
         }
 
         .chart-section {
@@ -134,6 +145,92 @@
             max-width: 100%;
             height: auto;
             border-radius: 10px;
+        }
+
+        .network-stats {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .network-stats h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .network-item {
+            padding: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .network-item .network-label {
+            font-size: 0.85em;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .network-item .network-value {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .heavy-resources {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .heavy-resources h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .resource-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .resource-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #f5576c;
+        }
+
+        .resource-url {
+            font-weight: 600;
+            color: #333;
+            word-break: break-all;
+            margin-bottom: 8px;
+        }
+
+        .resource-details {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .resource-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .pages-analyzed {
@@ -173,6 +270,43 @@
             opacity: 0.8;
         }
 
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 20, 40, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #loadingOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            border: 6px solid #ddd;
+            border-top: 6px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2em;
@@ -185,59 +319,23 @@
             .chart-section {
                 padding: 25px;
             }
+
+            .network-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        
-        /* 🔹 Loading Overlay Styling */
-#loadingOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(20, 20, 40, 0.9);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2em;
-  z-index: 9999;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-
-#loadingOverlay.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Simple spinner */
-.loader {
-  border: 6px solid #ddd;
-  border-top: 6px solid #667eea;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
     </style>
 </head>
 <body>
-    <div id="loadingOverlay">
-      <div class="loader"></div>
-      <p>Loading Site Performance Data...</p>
-    </div>
+    <!-- <div id="loadingOverlay">
+        <div class="loader"></div>
+        <p>Loading Site Performance Data...</p>
+    </div> -->
 
     <div class="container">
         <header>
             <h1>🚀 Site Performance Report</h1>
-            <p>Average Lighthouse Performance Metrics</p>
+            <p>Comprehensive Lighthouse Performance Analysis</p>
         </header>
 
         <div class="site-info">
@@ -246,11 +344,12 @@
         </div>
 
         <div class="stats-overview">
-            <div class="stats-title">Average Performance Metrics</div>
+            <div class="stats-title">Core Web Vitals</div>
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="label">FCP</div>
                     <div class="value" id="avgFcp">-</div>
+                    <div class="unit">ms</div>
                 </div>
                 <div class="stat-box">
                     <div class="label">CLS</div>
@@ -259,18 +358,74 @@
                 <div class="stat-box">
                     <div class="label">LCP</div>
                     <div class="value" id="avgLcp">-</div>
+                    <div class="unit">ms</div>
                 </div>
                 <div class="stat-box">
                     <div class="label">INP</div>
                     <div class="value" id="avgInp">-</div>
+                    <div class="unit">ms</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stats-title">Performance Metrics</div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="label">Speed Index</div>
+                    <div class="value" id="avgSpeedIndex">-</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">TTI</div>
+                    <div class="value" id="avgTti">-</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">TBT</div>
+                    <div class="value" id="avgTbt">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="network-stats">
+            <h3>📊 Network Statistics</h3>
+            <div class="network-grid">
+                <div class="network-item">
+                    <div class="network-label">Total Size</div>
+                    <div class="network-value" id="avgTotalBytes">-</div>
+                </div>
+                <div class="network-item">
+                    <div class="network-label">Requests</div>
+                    <div class="network-value" id="avgNetworkRequests">-</div>
+                </div>
+                <div class="network-item">
+                    <div class="network-label">Failed Requests</div>
+                    <div class="network-value" id="avgFailedRequests">-</div>
+                </div>
+                <div class="network-item">
+                    <div class="network-label">Potential Savings</div>
+                    <div class="network-value" id="avgSavingsBytes">-</div>
                 </div>
             </div>
         </div>
 
         <div class="chart-section">
-            <h2 class="chart-title">Overall Site Performance Visualization</h2>
+            <h2 class="chart-title">Core Web Vitals Visualization</h2>
             <div class="chart-container">
                 <img id="performanceChart" src="" alt="Site Performance Chart">
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="chart-title">Performance Metrics Timeline</h2>
+            <div class="chart-container">
+                <img id="timelineChart" src="" alt="Performance Timeline Chart">
+            </div>
+        </div>
+
+        <div class="heavy-resources">
+            <h3>⚠️ Heaviest Resources (Top 5 Average)</h3>
+            <div class="resource-list" id="resourceList">
+                <!-- Heavy resources will be listed here -->
             </div>
         </div>
 
@@ -287,6 +442,7 @@
     </div>
 
     <script>
+
 async function loadPortfolio() {
   try {
     const baseUrl = 'https://crimson-dust-0d1a.yogeshdeployedapps.workers.dev/';
@@ -299,6 +455,7 @@ async function loadPortfolio() {
     const data = await res.json();
 
     // 🔹 Normalize to array if needed and render
+    // console.log(data)
     const inputData = Array.isArray(data) ? data : [data];
     renderReport(inputData);
 
@@ -312,98 +469,243 @@ async function loadPortfolio() {
   }
 }
 
-// ✅ Your existing functions (slightly modified)
+function parseMetricValue(value) {
+    if (typeof value === 'number') return value;
+    if (typeof value === 'string') {
+        const num = parseFloat(value.replace(/[^0-9.]/g, ''));
+        return isNaN(num) ? 0 : num;
+    }
+    return 0;
+}
+
+function extractKiB(value) {
+    if (!value) return 0;
+    const match = value.match(/([\d,.]+)/);
+    return match ? parseFloat(match[1].replace(/,/g, '')) * 1024 : 0;
+}
+
+function parseHeavyResource(raw) {
+    if (!raw) return [];
+
+    // If it's already an array, use it; if string, parse JSON
+    let parsed;
+    if (typeof raw === 'string') {
+        try {
+            parsed = JSON.parse(raw);
+        } catch (e) {
+            console.warn('❌ Failed to parse heavy resource JSON:', e, raw);
+            return [];
+        }
+    } else if (Array.isArray(raw)) {
+        parsed = raw;
+    } else {
+        return [];
+    }
+
+    // Deduplicate by URL
+    const unique = [];
+    const seen = new Set();
+    for (const item of parsed) {
+        if (item.url && !seen.has(item.url)) {
+            seen.add(item.url);
+            unique.push(item);
+        }
+    }
+
+    return unique;
+}
+
+
+
+
+function formatBytes(bytes) {
+    if (!bytes || bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+}
+
 function processData(data) {
-  const uniquePages = {};
-  data.forEach(item => {
-    const site = item.current_site;
-    if (!uniquePages[site]) uniquePages[site] = item;
-  });
+    const uniquePages = {};
+    data.forEach(item => {
+        if (!uniquePages[item.current_site]) uniquePages[item.current_site] = item;
+    });
 
-  const uniqueMetrics = Object.values(uniquePages);
-  const totals = { fcp: 0, cls: 0, lcp: 0, inp: 0 };
+    const uniqueMetrics = Object.values(uniquePages);
+    const totals = {
+        fcp: 0, cls: 0, lcp: 0, inp: 0,
+        speedIndex: 0, tti: 0, tbt: 0,
+        totalBytes: 0, networkRequests: 0,
+        failedRequests: 0, savingsBytes: 0
+    };
 
-  uniqueMetrics.forEach(metric => {
-    totals.fcp += metric.fcp || 0;
-    totals.cls += metric.cls || 0;
-    totals.lcp += metric.lcp || 0;
-    totals.inp += metric.inp || 0;
-  });
+    const allResources = [];
 
-  const count = uniqueMetrics.length || 1;
-  const averages = {
-    fcp: Math.round(totals.fcp / count),
-    cls: Number((totals.cls / count).toFixed(2)),
-    lcp: Math.round(totals.lcp / count),
-    inp: Math.round(totals.inp / count)
-  };
+    uniqueMetrics.forEach(metric => {
+        totals.fcp += parseMetricValue(metric.fcp);
+        totals.cls += parseMetricValue(metric.cls);
+        totals.lcp += parseMetricValue(metric.lcp);
+        totals.inp += parseMetricValue(metric.inp);
+        totals.speedIndex += parseMetricValue(metric.speed_index);
+        totals.tti += parseMetricValue(metric.tti);
+        totals.tbt += parseMetricValue(metric.tbt);
+        totals.networkRequests += parseMetricValue(metric.network_request_length);
+        totals.failedRequests += parseMetricValue(metric.failed_requests);
+        totals.savingsBytes += parseMetricValue(metric.overall_savings_bytes);
 
-  return { averages, uniqueMetrics, baseSite: uniqueMetrics[0]?.base_site || 'Unknown' };
+        // Handle both total_bytes formats
+        totals.totalBytes += extractKiB(metric.total_bytes);
+
+        // Parse heaviest resources properly
+        allResources.push(...parseHeavyResource(metric.most_heavy_resource));
+        // allResources.push(metric.most_heavy_resource);
+    });
+
+    const count = uniqueMetrics.length || 1;
+    const averages = {
+        fcp: Math.round(totals.fcp / count),
+        cls: Number((totals.cls / count / 100).toFixed(3)), // adjust CLS
+        lcp: Math.round(totals.lcp / count),
+        inp: Math.round(totals.inp / count),
+        speedIndex: (totals.speedIndex / count).toFixed(1) + ' s',
+        tti: (totals.tti / count).toFixed(1) + ' s',
+        tbt: Math.round(totals.tbt / count) + ' ms',
+        totalBytes: formatBytes(totals.totalBytes / count),
+        networkRequests: Math.round(totals.networkRequests / count),
+        failedRequests: Math.round(totals.failedRequests / count),
+        savingsBytes: formatBytes(totals.savingsBytes / count)
+    };
+
+    const heaviestResources = allResources
+        .sort((a, b) => b.bytes - a.bytes)
+        .slice(0, 5);
+
+    return {
+        averages,
+        uniqueMetrics,
+        heaviestResources,
+        baseSite: uniqueMetrics[0]?.base_site || 'Unknown'
+    };
 }
 
 function generateChartUrl(averages, baseSite) {
-  const chartConfig = {
-    type: 'bar',
-    data: {
-      labels: ['FCP', 'CLS', 'LCP', 'INP'],
-      datasets: [{
-        label: baseSite,
-        data: [averages.fcp, averages.cls, averages.lcp, averages.inp],
-        backgroundColor: [
-          'rgba(54, 162, 235, 0.7)',
-          'rgba(255, 99, 132, 0.7)',
-          'rgba(255, 206, 86, 0.7)',
-          'rgba(75, 192, 192, 0.7)'
-        ],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      plugins: {
-        title: { display: true, text: 'Average Lighthouse Performance Metrics' }
-      },
-      scales: { y: { beginAtZero: true } }
-    }
-  };
-  return `https://quickchart.io/chart?width=800&height=500&c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
+    const chartConfig = {
+        type: 'bar',
+        data: {
+            labels: ['FCP (ms)', 'CLS', 'LCP (ms)', 'INP (ms)'],
+            datasets: [{
+                label: 'Core Web Vitals',
+                data: [
+                    averages.fcp,
+                    averages.cls,
+                    averages.lcp,
+                    averages.inp
+                ],
+                backgroundColor: [
+                    'rgba(54,162,235,0.7)',
+                    'rgba(255,99,132,0.7)',
+                    'rgba(255,206,86,0.7)',
+                    'rgba(75,192,192,0.7)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Average Core Web Vitals - ' + baseSite }
+            },
+            scales: { y: { beginAtZero: true } }
+        }
+    };
+    return `https://quickchart.io/chart?width=900&height=500&c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
+}
+
+function generateTimelineChart(averages) {
+    const chartConfig = {
+        type: 'line',
+        data: {
+            labels: ['Speed Index', 'TTI', 'TBT'],
+            datasets: [{
+                label: 'Performance Timeline (s)',
+                data: [
+                    parseMetricValue(averages.speedIndex),
+                    parseMetricValue(averages.tti),
+                    parseMetricValue(averages.tbt) / 1000
+                ],
+                borderColor: 'rgba(102,126,234,1)',
+                backgroundColor: 'rgba(102,126,234,0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Performance Metrics Timeline' }
+            },
+            scales: { y: { beginAtZero: true, title: { display: true, text: 'Seconds' } } }
+        }
+    };
+    return `https://quickchart.io/chart?width=900&height=500&c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
 }
 
 function renderReport(inputData) {
-  const { averages, uniqueMetrics, baseSite } = processData(inputData);
 
-  document.getElementById('baseSite').textContent = baseSite;
-  document.getElementById('pageCount').textContent = `${uniqueMetrics.length} page(s) analyzed`;
-  document.getElementById('totalPages').textContent = uniqueMetrics.length;
+    // const inputData = [{"id":5,"base_site":"https://redis.io/sitemap.xml","current_site":"https://redis.io/blog/","fcp":730,"cls":0,"inp":86,"lcp":921,"total_bytes":"Total size was 4,263 KiB","network_request_length":182,"speed_index":"2.7 s","tti":"5.6 s","tbt":"1,180 ms","overall_savings_bytes":"0","failed_requests":20,"most_heavy_resource":"[{'url': 'https://cdn.sanity.io/images/sy1jschh/production/301ece1890374bebf316832e9c17e584632197c3-3000x2001.jpg?w=3840&q=80&fit=clip&auto=format', 'bytes': 1291224, 'type': 'Image'}, {'url': 'https://redis.io/_next/static/chunks/c36f3faa-8e1fcdc6aded494d.js?dpl=dpl_2NggkZELudfAQUS3jYZ1L8y5Ye6Q', 'bytes': 424546, 'type': 'Script'}, {'url': 'https://cdn.sanity.io/images/sy1jschh/production/22ca8a4efac884615adb50ac9bc0a29ab166eac4-2497x2526.jpg?w=3840&q=80&fit=clip&auto=format', 'bytes': 336499, 'type': 'Image'}, {'url': 'https://redis.io/_next/static/chunks/8953-de94b95386c977a8.js?dpl=dpl_2NggkZELudfAQUS3jYZ1L8y5Ye6Q', 'bytes': 275075, 'type': 'Script'}, {'url': 'https://redis.io/blog/', 'bytes': 160352, 'type': 'Document'}]","calculated_time":"2025-10-16T16:13:52.421Z"}]
+    const { averages, uniqueMetrics, heaviestResources, baseSite } = processData(inputData);
 
-  document.getElementById('avgFcp').textContent = averages.fcp;
-  document.getElementById('avgCls').textContent = averages.cls;
-  document.getElementById('avgLcp').textContent = averages.lcp;
-  document.getElementById('avgInp').textContent = averages.inp;
+    document.getElementById('baseSite').textContent = baseSite;
+    document.getElementById('pageCount').textContent = `${uniqueMetrics.length} page(s) analyzed`;
+    document.getElementById('totalPages').textContent = uniqueMetrics.length;
 
-  document.getElementById('performanceChart').src = generateChartUrl(averages, baseSite);
+    document.getElementById('avgFcp').textContent = averages.fcp;
+    document.getElementById('avgCls').textContent = averages.cls;
+    document.getElementById('avgLcp').textContent = averages.lcp;
+    document.getElementById('avgInp').textContent = averages.inp;
 
-  const pageList = document.getElementById('pageList');
-  pageList.innerHTML = '';
-  uniqueMetrics.forEach(metric => {
-    const div = document.createElement('div');
-    div.className = 'page-item';
-    div.textContent = metric.current_site;
-    pageList.appendChild(div);
-  });
+    document.getElementById('avgSpeedIndex').textContent = averages.speedIndex;
+    document.getElementById('avgTti').textContent = averages.tti;
+    document.getElementById('avgTbt').textContent = averages.tbt;
 
-  document.getElementById('currentDate').textContent =
-    new Date().toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric'
+    document.getElementById('avgTotalBytes').textContent = averages.totalBytes;
+    document.getElementById('avgNetworkRequests').textContent = averages.networkRequests;
+    document.getElementById('avgFailedRequests').textContent = averages.failedRequests;
+    document.getElementById('avgSavingsBytes').textContent = averages.savingsBytes;
+
+    document.getElementById('performanceChart').src = generateChartUrl(averages, baseSite);
+    document.getElementById('timelineChart').src = generateTimelineChart(averages);
+
+    const resourceList = document.getElementById('resourceList');
+    resourceList.innerHTML = '';
+    heaviestResources.forEach(resource => {
+        const div = document.createElement('div');
+        div.className = 'resource-item';
+        div.innerHTML = `
+            <div class="resource-url">${resource.url}</div>
+            <div class="resource-details">
+                <div class="resource-detail"><strong>Size:</strong> ${formatBytes(resource.bytes)}</div>
+                <div class="resource-detail"><strong>Type:</strong> ${resource.type}</div>
+            </div>`;
+        resourceList.appendChild(div);
     });
-    
-    document.getElementById('loadingOverlay').classList.add('hidden');
 
+    const pageList = document.getElementById('pageList');
+    pageList.innerHTML = '';
+    uniqueMetrics.forEach(metric => {
+        const div = document.createElement('div');
+        div.className = 'page-item';
+        div.textContent = metric.current_site;
+        pageList.appendChild(div);
+    });
+
+    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+    });
 }
 
-// ✅ Trigger everything when page loads
 window.onload = loadPortfolio;
 </script>
-
 
 </body>
 </html>
